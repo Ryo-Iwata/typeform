@@ -30,3 +30,62 @@
 
 function normalizeUser(json) {
 if ("" in json && "choice" in json && " 
+
+
+
+
+/**
+ * 任意の「choice」オブジェクトを
+ *   { type: "choice", choice: { label: "…" } }
+ * の形に正規化するユーティリティ
+ *
+ * @param {Object} src  パターンA/B いずれかの JSON
+ * @returns {Object}    目標フォーマット
+ */
+function normalizeChoice(src) {
+  // 早期リターンで読みやすく
+  if (src?.choice?.label !== undefined) {
+    // パターンA: もともと label がある
+    return {
+      type: src.type,
+      choice: { label: src.choice.label }
+    };
+  }
+
+  if (src?.choice?.other !== undefined) {
+    // パターンB: other を label に置き換える
+    return {
+      type: src.type,
+      choice: { label: src.choice.other }
+    };
+  }
+
+  // どちらでもない場合はプレースホルダー
+  return {
+    type: src?.type ?? "choice",
+    choice: { label: "---" }
+  };
+}
+
+/* --- 使い方例 --- */
+const patternA = {
+  type: "choice",
+  choice: {
+    id: "KD1bvSKpOBfd",
+    label: "マーケティング",
+    ref: "40c17d5e-4a23-47a8-9081-f9433f147837"
+  }
+};
+
+const patternB = {
+  type: "choice",
+  choice: {
+    other: "あ"
+  }
+};
+
+console.log(normalizeChoice(patternA));
+// → { type: 'choice', choice: { label: 'マーケティング' } }
+
+console.log(normalizeChoice(patternB));
+// → { type: 'choice', choice: { label: 'あ' } }
