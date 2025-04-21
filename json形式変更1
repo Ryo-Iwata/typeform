@@ -1,0 +1,60 @@
+/**
+ * 例）
+ * いま受け取っている JSON は２パターンあり得るとする。
+ *
+ * パターンA:
+ * {
+ *   "id": 1,
+ *   "name": "Alice",
+ *   "score": 95
+ * }
+ *
+ * パターンB:
+ * {
+ *   "userId": 1,
+ *   "profile": {
+ *     "fullName": "Alice"
+ *   },
+ *   "result": {
+ *     "point": 95
+ *   }
+ * }
+ *
+ * どちらも最終的には
+ * {
+ *   "id": 1,
+ *   "name": "Alice",
+ *   "score": 95
+ * }
+ * の形にそろえたい。
+ */
+
+function normalizeUser(json) {
+  // --- パターンAそのままならキーを確認して即リターン ---
+  if ("id" in json && "name" in json && "score" in json) {
+    return json; // すでに欲しい形
+  }
+
+  // --- パターンBかどうかを判定して組み直す ---
+  if ("userId" in json && "profile" in json && "result" in json) {
+    return {
+      id: json.userId,
+      name: json.profile.fullName,
+      score: json.result.point
+    };
+  }
+
+  // --- どちらでもなければエラーを投げるなど ---
+  throw new Error("未知のフォーマットです: " + JSON.stringify(json));
+}
+
+// 使い方例
+const rawA = { id: 1, name: "Alice", score: 95 };
+const rawB = {
+  userId: 1,
+  profile: { fullName: "Alice" },
+  result: { point: 95 }
+};
+
+console.log(normalizeUser(rawA)); // { id: 1, name: 'Alice', score: 95 }
+console.log(normalizeUser(rawB)); // { id: 1, name: 'Alice', score: 95 }
