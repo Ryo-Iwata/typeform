@@ -1,7 +1,7 @@
 #choiceのラベルに統一する(パターンAに統一)
 
 #パターンA
- {
+ { 
   "type": "choice",
   "choice": {
     "id": "KD1bvSKpOBfd",
@@ -11,16 +11,22 @@
  }
 
 #パターンB
- {
+  { 
    "type": "choice",
    "choice": {
      "other": "あ"
    }
+  }
+ 
+
+#どちらも最終的には、下のようにしたい
+ {
+    "type": "choice",
+    "choice": {
+      "label": "---"
+    }
  }
 
 
-
-
-
 function normalizeUser(json) {
-if 
+if ("" in json && "choice" in json && " 
