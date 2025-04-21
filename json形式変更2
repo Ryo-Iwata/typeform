@@ -1,1 +1,26 @@
+#choiceのラベルに統一する(パターンAに統一)
 
+#パターンA
+ {
+  "type": "choice",
+  "choice": {
+    "id": "KD1bvSKpOBfd",
+    "label": "マーケティング",
+    "ref": "40c17d5e-4a23-47a8-9081-f9433f147837"
+  }
+ }
+
+#パターンB
+ {
+   "type": "choice",
+   "choice": {
+     "other": "あ"
+   }
+ }
+
+
+
+
+
+function normalizeUser(json) {
+if 
