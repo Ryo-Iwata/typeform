@@ -29,7 +29,17 @@
 
 
 function normalizeUser(json) {
-if ("" in json && "choice" in json && " 
+  if ("type" in json && "choice" in json && "id" in json && "label" in json && "ref" in json) {
+    return json; 
+  }
+
+  if ("type" in json && "choice" in json && "other" in json) {
+    return {
+      type: json.type,
+      choice: json.choice,
+      label: json.other
+    };
+  }
 
 
 
