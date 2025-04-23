@@ -44,3 +44,18 @@ function normalizeUser(json) {
 
 
 
+
+function normalizeUser(json) {
+  if (json.choice.id && json.choice.label && json.choice.ref) {
+    return {
+      label: json.choice.label
+    };
+  }
+
+  if (json.choice.other) {
+    return {
+      label: json.choice.other
+    };
+  }
+}
+
